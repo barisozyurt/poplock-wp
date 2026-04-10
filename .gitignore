@@ -1,0 +1,19 @@
+# Claude AI / Superpowers
+.claude/
+.claude-md
+docs/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archives
+*.zip
+*.tar.gz
