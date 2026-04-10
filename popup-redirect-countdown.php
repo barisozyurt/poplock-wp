@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Popup Redirect Countdown
- * Plugin URI:  https://mirket.io
+ * Plugin URI:  https://github.com/barisozyurt/poplock-wp
  * Description: Shows an animated image overlay on configurable pages. If the user doesn't close it, a countdown redirects them to a target URL.
  * Version:     1.1
  * Author:      Baris Ozyurt
