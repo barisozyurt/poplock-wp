@@ -18,11 +18,28 @@ class PRC_Frontend {
     }
 
     /**
+     * Get the resolved redirect URL based on type setting.
+     */
+    private function get_redirect_url() {
+        $type = get_option( 'prc_redirect_type', 'external' );
+
+        if ( 'page' === $type ) {
+            $page_id = absint( get_option( 'prc_redirect_page', 0 ) );
+            if ( $page_id > 0 ) {
+                return get_permalink( $page_id );
+            }
+            return '';
+        }
+
+        return get_option( 'prc_redirect_url', '' );
+    }
+
+    /**
      * Check whether the popup should display on the current page.
      */
     private function should_display() {
         $image_url    = get_option( 'prc_image_url', '' );
-        $redirect_url = get_option( 'prc_redirect_url', '' );
+        $redirect_url = $this->get_redirect_url();
 
         if ( empty( $image_url ) || empty( $redirect_url ) ) {
             return false;
@@ -32,6 +49,16 @@ class PRC_Frontend {
 
         if ( 'homepage' === $display_on && ! is_front_page() ) {
             return false;
+        }
+
+        if ( 'specific' === $display_on ) {
+            $display_pages = get_option( 'prc_display_pages', array() );
+            if ( ! is_array( $display_pages ) || empty( $display_pages ) ) {
+                return false;
+            }
+            if ( ! is_page( $display_pages ) ) {
+                return false;
+            }
         }
 
         return true;
@@ -62,7 +89,7 @@ class PRC_Frontend {
 
         wp_localize_script( 'prc-frontend', 'prcSettings', array(
             'countdownSeconds' => absint( get_option( 'prc_countdown_seconds', 10 ) ),
-            'redirectUrl'      => esc_url( get_option( 'prc_redirect_url', '' ) ),
+            'redirectUrl'      => esc_url( $this->get_redirect_url() ),
             'cookieDays'       => absint( get_option( 'prc_cookie_days', 7 ) ),
             'overlayOpacity'   => floatval( get_option( 'prc_overlay_opacity', 0.7 ) ),
         ) );

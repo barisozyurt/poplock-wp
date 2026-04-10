@@ -3,7 +3,7 @@
  * Plugin Name: Popup Redirect Countdown
  * Plugin URI:  https://mirket.io
  * Description: Shows an animated image overlay on configurable pages. If the user doesn't close it, a countdown redirects them to a target URL.
- * Version:     1.0
+ * Version:     1.1
  * Author:      Baris Ozyurt
  * Author URI:  https://mirket.io
  * License:     GPL-3.0
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'PRC_VERSION', '1.0' );
+define( 'PRC_VERSION', '1.1' );
 define( 'PRC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PRC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -41,9 +41,12 @@ function prc_activate() {
     $defaults = array(
         'prc_image_url'          => '',
         'prc_image_alt'          => '',
+        'prc_redirect_type'      => 'external',
+        'prc_redirect_page'      => 0,
         'prc_redirect_url'       => '',
         'prc_countdown_seconds'  => 10,
         'prc_display_on'         => 'homepage',
+        'prc_display_pages'      => array(),
         'prc_cookie_days'        => 7,
         'prc_overlay_opacity'    => 0.7,
     );

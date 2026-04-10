@@ -67,11 +67,22 @@ class PRC_Admin {
         ) );
         add_settings_field( 'prc_image_alt', __( 'Image Alt Text', 'popup-redirect-countdown' ), array( $this, 'render_text_field' ), 'prc-settings', 'prc_main_section', array( 'option' => 'prc_image_alt' ) );
 
-        // Redirect URL
+        // Redirect Type
+        register_setting( 'prc_settings_group', 'prc_redirect_type', array(
+            'sanitize_callback' => array( $this, 'sanitize_redirect_type' ),
+        ) );
+
+        // Redirect Page (internal)
+        register_setting( 'prc_settings_group', 'prc_redirect_page', array(
+            'sanitize_callback' => 'absint',
+        ) );
+
+        // Redirect URL (external)
         register_setting( 'prc_settings_group', 'prc_redirect_url', array(
             'sanitize_callback' => 'esc_url_raw',
         ) );
-        add_settings_field( 'prc_redirect_url', __( 'Redirect URL', 'popup-redirect-countdown' ), array( $this, 'render_text_field' ), 'prc-settings', 'prc_main_section', array( 'option' => 'prc_redirect_url', 'type' => 'url' ) );
+
+        add_settings_field( 'prc_redirect_url', __( 'Redirect URL', 'popup-redirect-countdown' ), array( $this, 'render_redirect_field' ), 'prc-settings', 'prc_main_section' );
 
         // Countdown Seconds
         register_setting( 'prc_settings_group', 'prc_countdown_seconds', array(
@@ -83,6 +94,12 @@ class PRC_Admin {
         register_setting( 'prc_settings_group', 'prc_display_on', array(
             'sanitize_callback' => array( $this, 'sanitize_display_on' ),
         ) );
+
+        // Display Pages (specific page IDs)
+        register_setting( 'prc_settings_group', 'prc_display_pages', array(
+            'sanitize_callback' => array( $this, 'sanitize_display_pages' ),
+        ) );
+
         add_settings_field( 'prc_display_on', __( 'Display On', 'popup-redirect-countdown' ), array( $this, 'render_display_on_field' ), 'prc-settings', 'prc_main_section' );
 
         // Cookie Duration
@@ -107,10 +124,27 @@ class PRC_Admin {
     }
 
     /**
+     * Sanitize redirect type.
+     */
+    public function sanitize_redirect_type( $value ) {
+        return in_array( $value, array( 'page', 'external' ), true ) ? $value : 'external';
+    }
+
+    /**
      * Sanitize display_on option.
      */
     public function sanitize_display_on( $value ) {
-        return in_array( $value, array( 'homepage', 'all' ), true ) ? $value : 'homepage';
+        return in_array( $value, array( 'homepage', 'all', 'specific' ), true ) ? $value : 'homepage';
+    }
+
+    /**
+     * Sanitize display pages (array of page IDs).
+     */
+    public function sanitize_display_pages( $value ) {
+        if ( ! is_array( $value ) ) {
+            return array();
+        }
+        return array_map( 'absint', $value );
     }
 
     /**
@@ -188,20 +222,86 @@ class PRC_Admin {
     }
 
     /**
-     * Render the Display On radio buttons.
+     * Render the Redirect URL field with page selector and external URL option.
      */
-    public function render_display_on_field() {
-        $value = get_option( 'prc_display_on', 'homepage' );
+    public function render_redirect_field() {
+        $type     = get_option( 'prc_redirect_type', 'external' );
+        $page_id  = get_option( 'prc_redirect_page', 0 );
+        $ext_url  = esc_attr( get_option( 'prc_redirect_url', '' ) );
+        $pages    = get_pages( array( 'sort_column' => 'post_title', 'sort_order' => 'ASC' ) );
         ?>
         <label>
-            <input type="radio" name="prc_display_on" value="homepage" <?php checked( $value, 'homepage' ); ?> />
+            <input type="radio" name="prc_redirect_type" value="page" <?php checked( $type, 'page' ); ?> class="prc-redirect-type" />
+            <?php esc_html_e( 'WordPress page', 'popup-redirect-countdown' ); ?>
+        </label>
+        <br />
+        <select name="prc_redirect_page" id="prc-redirect-page" style="margin: 4px 0 8px 24px;" <?php echo 'page' !== $type ? 'disabled' : ''; ?>>
+            <option value="0"><?php esc_html_e( '— Select a page —', 'popup-redirect-countdown' ); ?></option>
+            <?php foreach ( $pages as $p ) : ?>
+                <option value="<?php echo esc_attr( $p->ID ); ?>" <?php selected( $page_id, $p->ID ); ?>>
+                    <?php echo esc_html( $p->post_title ); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <br />
+        <label>
+            <input type="radio" name="prc_redirect_type" value="external" <?php checked( $type, 'external' ); ?> class="prc-redirect-type" />
+            <?php esc_html_e( 'External URL', 'popup-redirect-countdown' ); ?>
+        </label>
+        <br />
+        <input type="url" name="prc_redirect_url" id="prc-redirect-url" value="<?php echo $ext_url; ?>" class="regular-text" style="margin: 4px 0 0 24px;" <?php echo 'external' !== $type ? 'disabled' : ''; ?> />
+        <script>
+        jQuery(document).ready(function($){
+            $('.prc-redirect-type').on('change', function(){
+                var isPage = $(this).val() === 'page';
+                $('#prc-redirect-page').prop('disabled', !isPage);
+                $('#prc-redirect-url').prop('disabled', isPage);
+            });
+        });
+        </script>
+        <?php
+    }
+
+    /**
+     * Render the Display On radio buttons with specific page selection.
+     */
+    public function render_display_on_field() {
+        $value          = get_option( 'prc_display_on', 'homepage' );
+        $selected_pages = get_option( 'prc_display_pages', array() );
+        if ( ! is_array( $selected_pages ) ) {
+            $selected_pages = array();
+        }
+        $pages = get_pages( array( 'sort_column' => 'post_title', 'sort_order' => 'ASC' ) );
+        ?>
+        <label>
+            <input type="radio" name="prc_display_on" value="homepage" <?php checked( $value, 'homepage' ); ?> class="prc-display-on" />
             <?php esc_html_e( 'Homepage only', 'popup-redirect-countdown' ); ?>
         </label>
         <br />
         <label>
-            <input type="radio" name="prc_display_on" value="all" <?php checked( $value, 'all' ); ?> />
+            <input type="radio" name="prc_display_on" value="all" <?php checked( $value, 'all' ); ?> class="prc-display-on" />
             <?php esc_html_e( 'All pages', 'popup-redirect-countdown' ); ?>
         </label>
+        <br />
+        <label>
+            <input type="radio" name="prc_display_on" value="specific" <?php checked( $value, 'specific' ); ?> class="prc-display-on" />
+            <?php esc_html_e( 'Specific pages', 'popup-redirect-countdown' ); ?>
+        </label>
+        <div id="prc-specific-pages" style="margin: 8px 0 0 24px; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 8px; <?php echo 'specific' !== $value ? 'display:none;' : ''; ?>">
+            <?php foreach ( $pages as $p ) : ?>
+                <label style="display:block; margin-bottom: 4px;">
+                    <input type="checkbox" name="prc_display_pages[]" value="<?php echo esc_attr( $p->ID ); ?>" <?php checked( in_array( $p->ID, $selected_pages, true ) ); ?> />
+                    <?php echo esc_html( $p->post_title ); ?>
+                </label>
+            <?php endforeach; ?>
+        </div>
+        <script>
+        jQuery(document).ready(function($){
+            $('.prc-display-on').on('change', function(){
+                $('#prc-specific-pages').toggle($(this).val() === 'specific');
+            });
+        });
+        </script>
         <?php
     }
 
