@@ -104,14 +104,14 @@ class MIRKETPRC_Frontend {
             return;
         }
 
-        $image_url = esc_url( get_option( 'mirketprc_image_url', '' ) );
-        $image_alt = esc_attr( get_option( 'mirketprc_image_alt', '' ) );
+        $image_url = get_option( 'mirketprc_image_url', '' );
+        $image_alt = get_option( 'mirketprc_image_alt', '' );
         ?>
         <div id="mirketprc-overlay" class="mirketprc-overlay" aria-modal="true" role="dialog" aria-label="<?php esc_attr_e( 'Popup', 'mirket-popup-redirect-countdown' ); ?>">
             <div class="mirketprc-overlay__backdrop"></div>
             <div class="mirketprc-overlay__content">
                 <button class="mirketprc-overlay__close" aria-label="<?php esc_attr_e( 'Close popup', 'mirket-popup-redirect-countdown' ); ?>">&times;</button>
-                <img class="mirketprc-overlay__image" src="<?php echo $image_url; ?>" alt="<?php echo $image_alt; ?>" />
+                <img class="mirketprc-overlay__image" src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $image_alt ); ?>" />
                 <p class="mirketprc-overlay__countdown" id="mirketprc-countdown-text"></p>
             </div>
             <div class="mirketprc-overlay__progress-bar">

@@ -198,12 +198,12 @@ class MIRKETPRC_Admin {
     public function render_text_field( $args ) {
         $option = $args['option'];
         $type   = isset( $args['type'] ) ? $args['type'] : 'text';
-        $value  = esc_attr( get_option( $option, '' ) );
+        $value  = get_option( $option, '' );
         printf(
             '<input type="%s" name="%s" value="%s" class="regular-text" />',
             esc_attr( $type ),
             esc_attr( $option ),
-            $value
+            esc_attr( $value )
         );
     }
 
