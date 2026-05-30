@@ -3,6 +3,9 @@
 .claude-md
 docs/
 
+# Local-only marketing site (deployed elsewhere, never shipped to the repo)
+landing-page/
+
 # OS files
 .DS_Store
 Thumbs.db
