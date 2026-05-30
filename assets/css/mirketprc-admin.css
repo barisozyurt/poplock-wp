@@ -1,0 +1,36 @@
+/**
+ * Mirket Popup Redirect Countdown — Admin styles
+ *
+ * @author  Baris Ozyurt <mirket@mirket.io>
+ * @license GPL-3.0
+ */
+
+.mirketprc-image-preview {
+    margin-top: 10px;
+}
+
+.mirketprc-image-preview img {
+    max-width: 300px;
+    height: auto;
+}
+
+.mirketprc-indented {
+    margin: 4px 0 8px 24px;
+}
+
+input.mirketprc-indented {
+    margin: 4px 0 0 24px;
+}
+
+.mirketprc-page-list {
+    margin: 8px 0 0 24px;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.mirketprc-page-list__item {
+    display: block;
+    margin-bottom: 4px;
+}

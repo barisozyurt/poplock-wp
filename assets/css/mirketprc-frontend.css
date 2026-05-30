@@ -1,12 +1,12 @@
 /**
- * Popup Redirect Countdown — Frontend Styles
+ * Mirket Popup Redirect Countdown — Frontend Styles
  *
  * @author Baris Ozyurt <mirket@mirket.io>
  * @license GPL-3.0
  */
 
 /* Overlay container */
-.prc-overlay {
+.mirketprc-overlay {
     position: fixed;
     inset: 0;
     z-index: 999999;
@@ -19,13 +19,13 @@
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.prc-overlay--visible {
+.mirketprc-overlay--visible {
     opacity: 1;
     visibility: visible;
 }
 
 /* Dark backdrop */
-.prc-overlay__backdrop {
+.mirketprc-overlay__backdrop {
     position: absolute;
     inset: 0;
     background: #000;
@@ -33,7 +33,7 @@
 }
 
 /* Content wrapper */
-.prc-overlay__content {
+.mirketprc-overlay__content {
     position: relative;
     z-index: 1;
     display: flex;
@@ -44,7 +44,7 @@
 }
 
 /* Close button */
-.prc-overlay__close {
+.mirketprc-overlay__close {
     position: absolute;
     top: -16px;
     right: -16px;
@@ -64,21 +64,21 @@
     z-index: 2;
 }
 
-.prc-overlay__close:hover {
+.mirketprc-overlay__close:hover {
     background: rgba(0, 0, 0, 0.9);
     transform: scale(1.1);
 }
 
 /* Image */
-.prc-overlay__image {
+.mirketprc-overlay__image {
     max-width: 100%;
     max-height: 70vh;
     object-fit: contain;
     border-radius: 4px;
-    animation: prc-image-pop 0.4s ease 0.1s both;
+    animation: mirketprc-image-pop 0.4s ease 0.1s both;
 }
 
-@keyframes prc-image-pop {
+@keyframes mirketprc-image-pop {
     0% {
         transform: scale(0.9);
         opacity: 0;
@@ -90,7 +90,7 @@
 }
 
 /* Countdown text */
-.prc-overlay__countdown {
+.mirketprc-overlay__countdown {
     position: relative;
     z-index: 1;
     margin-top: 16px;
@@ -102,7 +102,7 @@
 }
 
 /* Progress bar */
-.prc-overlay__progress-bar {
+.mirketprc-overlay__progress-bar {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -112,7 +112,7 @@
     z-index: 1;
 }
 
-.prc-overlay__progress-fill {
+.mirketprc-overlay__progress-fill {
     height: 100%;
     width: 100%;
     background: #fff;

@@ -1,10 +1,10 @@
-=== Popup Redirect Countdown ===
-Contributors: barisozyurt
+=== Mirket Popup Redirect Countdown ===
+Contributors: mirketio, barisozyurt
 Tags: popup, redirect, countdown, overlay, lightbox
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,7 +12,7 @@ Shows an animated image overlay on configurable pages. If the user doesn't close
 
 == Description ==
 
-A lightweight WordPress plugin that displays a full-screen popup overlay with a custom image. If the visitor doesn't dismiss it, a countdown timer redirects them to a target URL.
+Mirket Popup Redirect Countdown is a lightweight WordPress plugin that displays a full-screen popup overlay with a custom image. If the visitor doesn't dismiss it, a countdown timer redirects them to a target URL.
 
 **Features:**
 
@@ -29,7 +29,7 @@ A lightweight WordPress plugin that displays a full-screen popup overlay with a 
 
 == Installation ==
 
-1. Upload the `popup-redirect-countdown` folder to `/wp-content/plugins/`.
+1. Upload the `mirket-popup-redirect-countdown` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the **Plugins** menu in WordPress.
 3. Go to **Popup Redirect** in the admin sidebar to configure settings.
 
@@ -53,6 +53,11 @@ The visitor is automatically redirected to the configured URL.
 
 == Changelog ==
 
+= 1.2 =
+* Renamed plugin to "Mirket Popup Redirect Countdown" with a distinctive, prefixed identifier.
+* Moved all inline admin scripts and styles into properly enqueued assets.
+* Prefixed all functions, classes, options, and handles to avoid collisions.
+
 = 1.1 =
 * Added internal WordPress page selection for redirect URL
 * Added specific page selection for display targeting
@@ -63,5 +68,5 @@ The visitor is automatically redirected to the configured URL.
 
 == Upgrade Notice ==
 
-= 1.1 =
-New page selector for redirect and display targeting options.
+= 1.2 =
+Plugin renamed and hardened for WordPress.org guidelines. Re-save your settings after updating.

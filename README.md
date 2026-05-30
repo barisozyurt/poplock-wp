@@ -1,8 +1,8 @@
-# Popup Redirect Countdown
+# Mirket Popup Redirect Countdown
 
 A lightweight WordPress plugin that displays a full-screen popup overlay with a custom image. If the visitor doesn't dismiss it, a countdown timer redirects them to a target URL.
 
-**Version:** 1.0
+**Version:** 1.2
 
 ## Features
 
@@ -19,7 +19,7 @@ A lightweight WordPress plugin that displays a full-screen popup overlay with a 
 ## Installation
 
 1. Download or clone this repository.
-2. Upload the `popup-redirect-countdown` folder to `/wp-content/plugins/`.
+2. Upload the `mirket-popup-redirect-countdown` folder to `/wp-content/plugins/`.
 3. Activate the plugin through the **Plugins** menu in WordPress.
 4. Go to **Popup Redirect** in the admin sidebar to configure settings.
 
