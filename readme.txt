@@ -4,7 +4,7 @@ Tags: popup, redirect, countdown, overlay, lightbox
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -53,7 +53,7 @@ The visitor is automatically redirected to the configured URL.
 
 == Changelog ==
 
-= 1.2 =
+= 1.3 =
 * Renamed plugin to "Mirket Popup Redirect Countdown" with a distinctive, prefixed identifier.
 * Moved all inline admin scripts and styles into properly enqueued assets.
 * Prefixed all functions, classes, options, and handles to avoid collisions.
@@ -68,5 +68,5 @@ The visitor is automatically redirected to the configured URL.
 
 == Upgrade Notice ==
 
-= 1.2 =
+= 1.3 =
 Plugin renamed and hardened for WordPress.org guidelines. Re-save your settings after updating.

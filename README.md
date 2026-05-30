@@ -2,7 +2,7 @@
 
 A lightweight WordPress plugin that displays a full-screen popup overlay with a custom image. If the visitor doesn't dismiss it, a countdown timer redirects them to a target URL.
 
-**Version:** 1.2
+**Version:** 1.3
 
 ## Features
 
