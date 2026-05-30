@@ -2,7 +2,7 @@
 Contributors: mirketio, barisozyurt
 Tags: popup, redirect, countdown, overlay, lightbox
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.0
 Stable tag: 1.4
 License: GPLv3
